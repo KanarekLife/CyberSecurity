@@ -255,9 +255,36 @@ Z uwagi na ograniczenia nałożone przez organizację Let's Encrypt, zaleca się
 
 ## Instalacja na serwerze NGINX (Linux) z certbot'em
 
+```bash
+# Instalacja serwera nginx
+apt-get -y update
+apt-get install -y nginx
+systemctl enable nginx
+
+# Instalacja certbot oraz generacja certyfikatu
+apt-get install -y certbot python3-certbot-nginx
+certbot --nginx --agree-tos # --register-unsafely-without-email --staging
+```
+
 |||
 
 ## Instalacja na serwerze Caddy (Linux)
+
+```
+# Przykładowa konfiguracja Caddyfile
+example.com {
+    root * /var/www/html
+    file_server
+    tls demo@example.com {
+        #ca https://acme-staging-v02.api.letsencrypt.org/directory
+        ca https://acme-v02.api.letsencrypt.org/directory
+    }
+}
+```
+
+```bash
+$ caddy run
+```
 
 |||
 
