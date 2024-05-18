@@ -1,0 +1,8 @@
+demo.nieradko.com {
+    root * /var/www/html
+    file_server
+    tls demo@demo.nieradko.com {
+        ca https://acme-staging-v02.api.letsencrypt.org/directory
+        #ca https://acme-v02.api.letsencrypt.org/directory
+    }
+}
