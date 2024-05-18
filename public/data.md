@@ -1,4 +1,4 @@
-<img class="r-stretch" src="./imgs/logo.svg" />
+<img class="r-stretch" src="./imgs/logo.svg" alt="lets encrypt logo" />
 
 # Temat 3: Instalacja i aktualizacja certyfikatu Let’s Encrypt dla serwera WWW
 
@@ -8,7 +8,7 @@ Stanisław Nieradko 193044, Filip Dawidowski 193433, Bartłomiej Krawisz 193319,
 
 # Czym jest Let's Encrypt?
 
-<img class="r-stretch" src="./imgs/howitworks_authorization.png" />
+<img class="r-stretch" src="./imgs/howitworks_authorization.png" alt="how it works authorization" />
 
 > Let’s Encrypt to bezpłatny, automatyczny i wolny urząd certyfikacji (CA) działający dla pożytku publicznego. Jest to usługa dostarczana przez Internet Security Research Group (ISRG).
 >
@@ -18,7 +18,7 @@ Stanisław Nieradko 193044, Filip Dawidowski 193433, Bartłomiej Krawisz 193319,
 
 |||
 
-# Let’s Encrypt operuje:
+# Zasady funkcjonowania fundacji Let's Encrypt
 
 - **Bezpłatnie**: Każdy właściciel domeny może użyć Let’s Encrypt do uzyskania zaufanego certyfikatu bez żadnych opłat.
 - **Automatycznie**: Oprogramowanie działające na serwerze może bezproblemowo wchodzić w interakcję z Let’s Encrypt, aby uzyskać certyfikat, bezpiecznie skonfigurować go do użytku oraz automatycznie zająć się odnowieniem. 
@@ -29,17 +29,17 @@ Stanisław Nieradko 193044, Filip Dawidowski 193433, Bartłomiej Krawisz 193319,
 
 |||
 
-<img class="r-stretch" src="./imgs/Meme1.jpg" />
+<img class="r-stretch" src="./imgs/Meme1.jpg" alt="meme 1" />
 
 ---
 
 # Czy jest to rozwiązanie doskonałe?
 
-<img class="r-stretch" src="./imgs/Meme2.jpg" /> <!-- .element: class="fragment" data-fragment-index="1" -->
+<img class="r-stretch" src="./imgs/Meme2.jpg" alt="meme 2" /> <!-- .element: class="fragment" data-fragment-index="1" -->
 
 |||
 
-# Co wybrać?
+# Dostępne rozwiązania
 
 <div style="display: flex;">
 
@@ -93,9 +93,9 @@ Stanisław Nieradko 193044, Filip Dawidowski 193433, Bartłomiej Krawisz 193319,
 
 |||
 
-<img class="r-stretch" src="./imgs/Meme3.jpg" />
+<img class="r-stretch" src="./imgs/Meme3.jpg" alt="meme 3" />
 
-# Wróćmy do bohatera tej prezentacji
+# Skupmy się na Let's Encrypt
 
 ---
 
@@ -110,7 +110,7 @@ Stanisław Nieradko 193044, Filip Dawidowski 193433, Bartłomiej Krawisz 193319,
 
 - Obecnie najczęściej stosowanymi metodami są `http-01` oraz `dns-01`.
 
-- Do generowania certyfikatów **Let's Encrypt** można często używa się narzędzia **Certbot**. Jest to narzędzie, które automatyzuje proces generowania certyfikatów, a także ich odnawiania. Certbot wspiera zarówno autoryzację `http-01`, jak i `dns-01`.
+- Do generowania certyfikatów **Let's Encrypt** często używa się narzędzia **Certbot**. Jest to narzędzie, które automatyzuje proces generowania certyfikatów, a także ich odnawiania. Certbot wspiera zarówno autoryzację `http-01`, jak i `dns-01`.
 
 |||
 
@@ -142,15 +142,17 @@ Stanisław Nieradko 193044, Filip Dawidowski 193433, Bartłomiej Krawisz 193319,
 
 ## TLS-SNI-01 challenge
 
-- Metoda `TLS-SNI-01` została wycofana z użycia w 2019 roku z powodu niewystarczającego poziomu bezpieczeństwa.
+- Do 2019 roku jedną z metod autoryzacji był `TLS-SNI-01`. Polegała ona na **przekazaniu przez Let's Encrypt serwerowi** specjalnego zapytania TLS, które zawierało **wygenerowany przez Let's Encrypt kod**. Serwer musiał zwrócić ten sam kod, aby potwierdzić, że domena należy do osoby, która chce wygenerować certyfikat.
 
-<img class="r-stretch" src="./imgs/meme4.jpg" />
+- Metoda została wycofana z użycia w 2019 roku i zastąpiona przez `LS-ALPN-01` z powodu niewystarczającego poziomu bezpieczeństwa.
+
+<img class="r-stretch" src="./imgs/meme4.jpg" alt="meme 4" />
 
 |||
 
 ## LS-ALPN-01 challenge
 
-- Zastąpiła ją metoda `TLS-ALPN-01`, która polega na **dodaniu rekordu TLS** do DNS domeny, dla której chcemy wygenerować certyfikat. Rekord ten zawiera, podobnie jak w przypadku `HTTP-01`, **wygenerowany przez Let's Encrypt kod**.
+- Polega na **przekazaniu przez Let's Encrypt serwerowi** specjalnego zapytania TLS, które zawiera **wygenerowany przez Let's Encrypt kod**. Serwer musi zwrócić ten sam kod, aby potwierdzić, że domena należy do osoby, która chce wygenerować certyfikat.
 
 - Metoda ta jest rzadko stosowana. Nie jest obsługiwana przez Apache, Nginx ani Certbot. Jednym z nielicznych narzędzi, które wspierają tę metodę, jest Caddy.
 
@@ -162,56 +164,55 @@ Stanisław Nieradko 193044, Filip Dawidowski 193433, Bartłomiej Krawisz 193319,
 
 ## Wspierane sposoby instalacji certyfikatu Let's Encrypt
 
-<img class="r-stretch" src="./imgs/8q1p9z.gif" />
+<img class="r-stretch" src="./imgs/8q1p9z.gif" alt="monkey hammer gif" />
 
 |||
 
 ## Manualna
+
+- **Manualna instalacja** certyfikatu polega na ręcznym wygenerowaniu certyfikatu Let's Encrypt, a następnie skonfigurowaniu serwera WWW, aby używał tego certyfikatu.
+
+- Do generowania certyfikatów można użyć narzędzi takich jak **Certbot** lub **ZeroSSL**. Następnie należy skonfigurować serwer WWW, aby używał wygenerowanego certyfikatu oraz pamiętać o regularnym odnawianiu certyfikatów.
+
+- Metoda ta jest **niewygodna** i **czasochłonna**, dlatego zaleca się automatyzację procesu generowania certyfikatów (ACME) ale ma swoje zastosowanie w przypadku systemów, które nie są obsługiwane przez narzędzia automatyzujące.
 
 |||
 
 ## Certbot
 
 - **Certbot** to prosty w użyciu program, który automatyzuje proces uzyskiwania certyfikatów Let's Encrypt. Automatycznie konfiguruje serwer WWW (np. apache, nginx), aby używał nowego certyfikatu, a także automatycznie odnawia certyfikaty, gdy zbliżają się do wygaśnięcia. Certbot wspiera autoryzację `http-01` oraz `dns-01`.
+
+- Certbot jest dostępny na większość popularnych systemów operacyjnych, takich jak **Linux**, **Windows** oraz **macOS**. Dostępne są również wtyczki do popularnych serwerów WWW, takich jak **Apache** i **Nginx**, umożliwiające automatyczne przystosowanie konfiguracji używanego serwera WWW.
+
 |||
 
-# Caddy
+## Caddy
 
-**Caddy** to serwer WWW z automatycznym generowaniem certyfikatów **Let's Encrypt**.
+- **Caddy** to serwer WWW, który automatycznie obsługuje certyfikaty Let's Encrypt. Wystarczy dodać konfigurację serwera WWW do pliku `Caddyfile`, a Caddy automatycznie wygeneruje certyfikat Let's Encrypt i skonfiguruje serwer WWW, aby używał tego certyfikatu.
+
+- Caddy obsługuje autoryzację `http-01` oraz `tls-alpn-01`. W przypadku autoryzacji `http-01`, Caddy automatycznie dodaje odpowiednią konfigurację do pliku `Caddyfile`, aby umożliwić Let's Encrypt weryfikację domeny.
+
+- Caddy jest dostępny na systemy operacyjne **Linux**, **Windows** oraz **macOS**. Oprócz obsługi certyfikatów Let's Encrypt, Caddy oferuje wiele innych funkcji, takich jak load balancing, obsługa protokołu HTTP/2, eksperymentalna obsługa protokołu QUIC czy możliwość konfiguracji poprzez API, dzięki czemu jest to ciekawa alternatywa dla bardziej popularnych serwerów WWW, takich jak **Apache** czy **Nginx**.
+
+|||
+
+## cert-manager
+
+- **cert-manager** to narzędzie do zarządzania certyfikatami w środowiskach opartych na **Kubernetes**. Automatycznie generuje certyfikaty Let's Encrypt dla aplikacji działających w klastrze Kubernetes, a także automatycznie odnawia certyfikaty, gdy zbliżają się do wygaśnięcia.
+
+- cert-manager obsługuje autoryzację `http-01` oraz `dns-01`. W przypadku obu metod, cert-manager automatycznie dodaje odpowiednie zasoby do klastra Kubernetes, aby umożliwić Let's Encrypt weryfikację domeny.
 
 |||
 
 ## Dostawcy Hostingu
 
-- Wiele firm hostingowych oferuje integrację z Let's Encrypt. W takim przypadku proces generowania certyfikatu jest zautomatyzowany, a użytkownik nie musi się martwić o konfigurację serwera WWW.
-
-<div class="r-stack">
-
-<div class="current-visible r-stretch fragment fade-in" data-fragment-index="1">
-
-- Poniżej przedstawiamy przykładową konfigurację certyfikatu Let's Encrypt u jednego z dostawców hostingowych.
-
-<img src="./imgs/hosting1.jpg" /> 
-
-- Włączamy obsługę SSL dla naszej domeny.
-
-- Następnie dodajemy symboliczne dowiązanie katalogu `private_html` do katalogu `public_html`.
-
-</div>
-
-- Następnie wybieramy certyfikat Let's Encrypt.
-
-- Następnie możemy wybrać, dla których domen chcemy wygenerować certyfikat.
- 
-<img class="current-visible r-stretch" src="./imgs/hosting2.png" /> <!-- .element: class="fragment fade-in" data-fragment-index="2" -->
-
-</div>
+- Wiele firm hostingowych oferuje integrację z Let's Encrypt. W takim przypadku proces generowania certyfikatu jest zautomatyzowany, a użytkownik nie musi się martwić o konfigurację serwera WWW. Jedną z wad takiego rozwiązania jest ograniczona kontrola nad konfiguracją oraz limit na ilość certyfikatów, które można wygenerować.
 
 ---
 
 # Środowiska
 
-Certyfikatów Let's Encrypt można używać zarówno w środowiskach produkcyjnych, jak i testowych. W zależności od środowiska, różnią się one pewnymi parametrami.
+Z uwagi na ograniczenia nałożone przez organizację Let's Encrypt, zaleca się używanie certyfikatów wystawionych w środowisku testowym do testowania automatyzacji procesu generowania certyfikatów.
 
 <br />
 <br />
@@ -248,7 +249,7 @@ Certyfikatów Let's Encrypt można używać zarówno w środowiskach produkcyjny
 
 ## Czas na praktykę!
 
-<img class="r-stretch" src="./imgs/8q1qtu.gif" />
+<img class="r-stretch" src="./imgs/8q1qtu.gif" alt="meme gif" />
 
 |||
 
@@ -256,7 +257,35 @@ Certyfikatów Let's Encrypt można używać zarówno w środowiskach produkcyjny
 
 |||
 
+## Instalacja na serwerze Caddy (Linux)
+
+|||
+
 ## Instalacja w firmie hostingowej
+
+Poniżej przedstawiamy przykładową konfigurację certyfikatu Let's Encrypt u jednego z dostawców hostingowych.
+
+<div class="r-stack">
+
+<div class="current-visible r-stretch fragment " data-fragment-index="1">
+
+<img src="./imgs/hosting1.jpg" alt="hosting 1" />
+
+- Włączamy obsługę SSL dla naszej domeny.
+
+- Następnie dodajemy symboliczne dowiązanie katalogu `private_html` do katalogu `public_html`.
+
+</div>
+
+<div class="current-visible r-stretch fragment fade-in" data-fragment-index="2">
+
+- Wybieramy certyfikat Let's Encrypt.
+
+- Następnie możemy wybrać, dla których domen chcemy wygenerować certyfikat.
+
+<img class="current-visible r-stretch" src="./imgs/hosting2.png" alt="hosting 2" /> <!-- .element: class="fragment fade-in" data-fragment-index="2" -->
+
+</div>
 
 ---
 
