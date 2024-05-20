@@ -25,7 +25,7 @@ Stanisław Nieradko 193044, Filip Dawidowski 193433, Bartłomiej Krawisz 193319,
 - **Bezpiecznie**: Let’s Encrypt spełnia funkcję platformy do doskonalenia najlepszych praktyk zabezpieczeń TLS, zarówno po stronie CA, jak i pomagając operatorom witryn poprawnie zabezpieczyć swoje serwery.
 - **Otwarcie**: Wszystkie wydane lub cofnięte certyfikaty będą publicznie rejestrowane i dostępne dla każdego do wglądu.
 - **Wolnie**: Protokół automatycznego wydawania oraz odnawiania jest opublikowany jako wolny standard, który każdy może zastosować.
-- **Wspólnie**: Tak jak podstawowe protokoły internetowe, Let’s Encrypt to wspólny wysiłek na rzecz społeczności pozostający poza kontrolną jakiejkolwiek organizacji.
+- **Wspólnie**: Tak jak podstawowe protokoły internetowe, Let’s Encrypt to wspólny wysiłek na rzecz społeczności pozostający poza kontrolą jakiejkolwiek organizacji.
 
 |||
 
@@ -103,10 +103,11 @@ Stanisław Nieradko 193044, Filip Dawidowski 193433, Bartłomiej Krawisz 193319,
 
 - Przy generowaniu certyfikatu Let's Encrypt wymagane jest potwierdzenie, że domena, dla której certyfikat chcemy wygenerować, należy do nas. Możliwe jest to poprzez spełnienie jednego z warunków opisanych w standardzie ACME (Automated Certificate Management Environment). Obecnie wspierane są trzy metody autoryzacji.
 
-| Identyfikator | `http-01` | `dns-01` | `tls-alpn-01` |
-|---------------|-----------|----------|---------------|
-| Adres IP      | ✔️       | ❌       | ✔️            |
-| Nazwa hosta   | ✔️       | ✔️       | ✔️            |
+| Identyfikator    | `http-01` | `dns-01` | `tls-alpn-01` |
+| ---------------- | --------- | -------- | ------------- |
+| Adres IP         | ✔️        | ❌      | ✔️            |
+| Nazwa hosta      | ✔️        | ✔️      | ✔️            |
+| Obsługa wildcard | ❌        | ✔️      | ❌            |
 
 - Obecnie najczęściej stosowanymi metodami są `http-01` oraz `dns-01`.
 
@@ -144,7 +145,7 @@ Stanisław Nieradko 193044, Filip Dawidowski 193433, Bartłomiej Krawisz 193319,
 
 - Do 2019 roku jedną z metod autoryzacji był `TLS-SNI-01`. Polegała ona na **przekazaniu przez Let's Encrypt serwerowi** specjalnego zapytania TLS, które zawierało **wygenerowany przez Let's Encrypt kod**. Serwer musiał zwrócić ten sam kod, aby potwierdzić, że domena należy do osoby, która chce wygenerować certyfikat.
 
-- Metoda została wycofana z użycia w 2019 roku i zastąpiona przez `LS-ALPN-01` z powodu niewystarczającego poziomu bezpieczeństwa.
+- Metoda została wycofana z użycia w 2019 roku i zastąpiona przez `TLS-ALPN-01` z powodu niewystarczającego poziomu bezpieczeństwa.
 
 <img class="r-stretch" src="./imgs/meme4.jpg" alt="meme 4" />
 
