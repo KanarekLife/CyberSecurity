@@ -41,7 +41,7 @@ Stanisław Nieradko 193044, Filip Dawidowski 193433, Bartłomiej Krawisz 193319,
 
 # Dostępne rozwiązania
 
-<div style="display: flex;">
+<div style="display: flex; font-size: 30pt">
 
 <div> <!-- .element: class="fragment fade-in" data-fragment-index="1" -->
 
@@ -68,7 +68,7 @@ Stanisław Nieradko 193044, Filip Dawidowski 193433, Bartłomiej Krawisz 193319,
 
 <br />
 
-<div style="display: flex">
+<div style="display: flex; font-size: 30pt">
 
 <div> <!-- .element: class="fragment fade-in" data-fragment-index="3" -->
 
