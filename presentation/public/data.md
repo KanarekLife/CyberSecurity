@@ -155,7 +155,9 @@ note: Filip
 # Czy jest to rozwiązanie doskonałe?
 
 <img class="r-stretch" src="./imgs/Meme2.jpg" alt="meme 2" /> <!-- .element: class="fragment" data-fragment-index="1" -->
+
 note: Stachu
+
 |||
 
 # Dostępne rozwiązania
