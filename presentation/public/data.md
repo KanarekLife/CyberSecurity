@@ -16,6 +16,7 @@ Stanisław Nieradko 193044, Filip Dawidowski 193433, Bartłomiej Krawisz 193319,
 >
 > Źródło: <cite>https://letsencrypt.org/pl/about/</cite>
 
+note: Stachu
 |||
 
 # Zasady funkcjonowania fundacji Let's Encrypt
@@ -27,76 +28,11 @@ Stanisław Nieradko 193044, Filip Dawidowski 193433, Bartłomiej Krawisz 193319,
 - **Wolnie**: Protokół automatycznego wydawania oraz odnawiania jest opublikowany jako wolny standard, który każdy może zastosować.
 - **Wspólnie**: Tak jak podstawowe protokoły internetowe, Let’s Encrypt to wspólny wysiłek na rzecz społeczności pozostający poza kontrolą jakiejkolwiek organizacji.
 
+note: Stachu
 |||
 
 <img class="r-stretch" src="./imgs/Meme1.jpg" alt="meme 1" />
-
----
-
-# Czy jest to rozwiązanie doskonałe?
-
-<img class="r-stretch" src="./imgs/Meme2.jpg" alt="meme 2" /> <!-- .element: class="fragment" data-fragment-index="1" -->
-
-|||
-
-# Dostępne rozwiązania
-
-<div style="display: flex; font-size: 30pt">
-
-<div> <!-- .element: class="fragment fade-in" data-fragment-index="1" -->
-
-## Let's Encrypt
-
-- Darmowe certyfikaty (90 dni)
-- Automatyczne odnawianie (certbot, caddy i inne narzędzia)
-- Wsparcie dla wildcardów (tylko DNS-01)
-- Duża społeczność i wsparcie
-
-</div>
-
-<div> <!-- .element: class="fragment fade-in" data-fragment-index="2" -->
-
-## Płatne certyfikaty
-
-- Dłuższy termin ważności (do 2 lat, chociaż niektóre przeglądarki ograniczają do 1 roku)
-- Możliwość wykupienia certyfikatów Organizational Validation (OV) i Extended Validation (EV)
-- Wsparcie techniczne
-
-</div>
-
-</div>
-
-<br />
-
-<div style="display: flex; font-size: 30pt">
-
-<div> <!-- .element: class="fragment fade-in" data-fragment-index="3" -->
-
-## ZeroSSL
-
-- Zarówno darmowe, jak i płatne certyfikaty
-- Pełna konsola oraz REST API do zarządzania certyfikatami
-- Monitorowanie certyfikatów SSL
-
-</div>
-
-<div> <!-- .element: class="fragment fade-in" data-fragment-index="4" -->
-
-## Cloudflare
-
-- Zarówno darmowe, jak i płatne certyfikaty (większe możliwości konfiguracji szyfrowania oraz wielopoziomowe domeny)
-- Zintegrowane z usługami Cloudflare (popularny CDN, firewall i inne usługi)
-- Łatwa i natychmiastowa konfiguracja dla użytkowników Cloudflare'a
-
-</div>
-</div>
-
-|||
-
-<img class="r-stretch" src="./imgs/Meme3.jpg" alt="meme 3" />
-
-# Skupmy się na Let's Encrypt
-
+note: Stachu
 ---
 
 ## Autoryzacja domeny
@@ -112,7 +48,7 @@ Stanisław Nieradko 193044, Filip Dawidowski 193433, Bartłomiej Krawisz 193319,
 - Obecnie najczęściej stosowanymi metodami są `http-01` oraz `dns-01`.
 
 - Do generowania certyfikatów **Let's Encrypt** często używa się narzędzia **Certbot**. Jest to narzędzie, które automatyzuje proces generowania certyfikatów, a także ich odnawiania. Certbot wspiera zarówno autoryzację `http-01`, jak i `dns-01`.
-
+note: Nasus
 |||
 
 ## HTTP-01 challenge
@@ -126,7 +62,7 @@ Stanisław Nieradko 193044, Filip Dawidowski 193433, Bartłomiej Krawisz 193319,
 - Metoda ta jest **prosta w implementacji oraz szybka**, gdyż nie wymaga żadnych dodatkowych konfiguracji DNS. Potrzebujemy jednak dostępu do serwera HTTP obsługującego naszą domenę.
 
 - Metody tej **nie można** użyć, aby wygenerować certyfikat **wildcard**. W przypadku kilku serwerów, każdy z nich musi zwracać ten sam kod.
-
+note: Nasus
 |||
 
 ## DNS-01 challenge
@@ -138,7 +74,7 @@ Stanisław Nieradko 193044, Filip Dawidowski 193433, Bartłomiej Krawisz 193319,
 - Metoda `DNS-01` wymaga dostępu do **konfiguracji DNS** domeny, dla której chcemy wygenerować certyfikat. Utrudnia to automatyzację procesu generowania certyfikatów. Dostawca DNS musi udostępniać odpowiednie **API**. Zalecane jest używanie uwierzytelniania API o ograniczonych uprawnieniach bądź walidacja DNS z osobnego serwera, a następnie skopiowanie certyfikatu na serwer.
 
 - Metoda ta jest wolniejsza od `HTTP-01`, gdyż wymaga **czasu propagacji rekordów DNS**. Jest to jednak jedyna metoda, która **pozwala** na generowanie certyfikatów **wildcard**. W przypadku kilku serwerów, wystarczy jedna konfiguracja DNS.
-
+note: Nasus
 |||
 
 ## TLS-SNI-01 challenge
@@ -148,10 +84,10 @@ Stanisław Nieradko 193044, Filip Dawidowski 193433, Bartłomiej Krawisz 193319,
 - Metoda została wycofana z użycia w 2019 roku i zastąpiona przez `TLS-ALPN-01` z powodu niewystarczającego poziomu bezpieczeństwa.
 
 <img class="r-stretch" src="./imgs/meme4.jpg" alt="meme 4" />
-
+note: Nasus
 |||
 
-## LS-ALPN-01 challenge
+## TLS-ALPN-01 challenge
 
 - Polega na **przekazaniu przez Let's Encrypt serwerowi** specjalnego zapytania TLS, które zawiera **wygenerowany przez Let's Encrypt kod**. Serwer musi zwrócić ten sam kod, aby potwierdzić, że domena należy do osoby, która chce wygenerować certyfikat.
 
@@ -160,55 +96,7 @@ Stanisław Nieradko 193044, Filip Dawidowski 193433, Bartłomiej Krawisz 193319,
 - Zaletą tej metody jest brak konieczności dostępu do portu 80. Cały proces odbywa się na warstwie TLS.
 
 - Metoda ta, podobnie jak `HTTP-01`, **nie pozwala** na generowanie certyfikatów **wildcard**. W przypadku kilku serwerów, każdy z nich musi zwracać ten sam kod.
-
----
-
-## Wspierane sposoby instalacji certyfikatu Let's Encrypt
-
-<img class="r-stretch" src="./imgs/8q1p9z.gif" alt="monkey hammer gif" />
-
-|||
-
-## Manualna
-
-- **Manualna instalacja** certyfikatu polega na ręcznym wygenerowaniu certyfikatu Let's Encrypt, a następnie skonfigurowaniu serwera WWW, aby używał tego certyfikatu.
-
-- Do generowania certyfikatów można użyć narzędzi takich jak **Certbot** lub **ZeroSSL**. Następnie należy skonfigurować serwer WWW, aby używał wygenerowanego certyfikatu oraz pamiętać o regularnym odnawianiu certyfikatów.
-
-- Metoda ta jest **niewygodna** i **czasochłonna**, dlatego zaleca się automatyzację procesu generowania certyfikatów (ACME) ale ma swoje zastosowanie w przypadku systemów, które nie są obsługiwane przez narzędzia automatyzujące.
-
-|||
-
-## Certbot
-
-- **Certbot** to prosty w użyciu program, który automatyzuje proces uzyskiwania certyfikatów Let's Encrypt. Automatycznie konfiguruje serwer WWW (np. apache, nginx), aby używał nowego certyfikatu, a także automatycznie odnawia certyfikaty, gdy zbliżają się do wygaśnięcia. Certbot wspiera autoryzację `http-01` oraz `dns-01`.
-
-- Certbot jest dostępny na większość popularnych systemów operacyjnych, takich jak **Linux**, **Windows** oraz **macOS**. Dostępne są również wtyczki do popularnych serwerów WWW, takich jak **Apache** i **Nginx**, umożliwiające automatyczne przystosowanie konfiguracji używanego serwera WWW.
-
-|||
-
-## Caddy
-
-- **Caddy** to serwer WWW, który automatycznie obsługuje certyfikaty Let's Encrypt. Wystarczy dodać konfigurację serwera WWW do pliku `Caddyfile`, a Caddy automatycznie wygeneruje certyfikat Let's Encrypt i skonfiguruje serwer WWW, aby używał tego certyfikatu.
-
-- Caddy obsługuje autoryzację `http-01` oraz `tls-alpn-01`. W przypadku autoryzacji `http-01`, Caddy automatycznie dodaje odpowiednią konfigurację do pliku `Caddyfile`, aby umożliwić Let's Encrypt weryfikację domeny.
-
-- Caddy jest dostępny na systemy operacyjne **Linux**, **Windows** oraz **macOS**. Oprócz obsługi certyfikatów Let's Encrypt, Caddy oferuje wiele innych funkcji, takich jak load balancing, obsługa protokołu HTTP/2, eksperymentalna obsługa protokołu QUIC czy możliwość konfiguracji poprzez API, dzięki czemu jest to ciekawa alternatywa dla bardziej popularnych serwerów WWW, takich jak **Apache** czy **Nginx**.
-
-|||
-
-## cert-manager
-
-- **cert-manager** to narzędzie do zarządzania certyfikatami w środowiskach opartych na **Kubernetes**. Automatycznie generuje certyfikaty Let's Encrypt dla aplikacji działających w klastrze Kubernetes, a także automatycznie odnawia certyfikaty, gdy zbliżają się do wygaśnięcia.
-
-- cert-manager obsługuje autoryzację `http-01` oraz `dns-01`. W przypadku obu metod, cert-manager automatycznie dodaje odpowiednie zasoby do klastra Kubernetes, aby umożliwić Let's Encrypt weryfikację domeny.
-
-|||
-
-## Dostawcy Hostingu
-
-- Wiele firm hostingowych oferuje integrację z Let's Encrypt. W takim przypadku proces generowania certyfikatu jest zautomatyzowany, a użytkownik nie musi się martwić o konfigurację serwera WWW. Jedną z wad takiego rozwiązania jest ograniczona kontrola nad konfiguracją oraz limit na ilość certyfikatów, które można wygenerować.
-
+note: Nasus
 ---
 
 # Środowiska
@@ -245,13 +133,127 @@ Z uwagi na ograniczenia nałożone przez organizację Let's Encrypt, zaleca się
 </div>
 
 </div>
-
+note: Filip
 ---
+
+# Czy jest to rozwiązanie doskonałe?
+
+<img class="r-stretch" src="./imgs/Meme2.jpg" alt="meme 2" /> <!-- .element: class="fragment" data-fragment-index="1" -->
+note: Stachu
+|||
+
+# Dostępne rozwiązania
+
+<div style="display: flex; font-size: 30pt">
+
+<div> <!-- .element: class="fragment fade-in" data-fragment-index="1" -->
+
+## Let's Encrypt
+
+- Darmowe certyfikaty (90 dni)
+- Automatyczne odnawianie (certbot, caddy i inne narzędzia)
+- Wsparcie dla wildcardów (tylko DNS-01)
+- Duża społeczność i wsparcie
+
+</div>
+
+<div> <!-- .element: class="fragment fade-in" data-fragment-index="2" -->
+
+## Płatne certyfikaty
+
+- Dłuższy termin ważności (do 2 lat, chociaż niektóre przeglądarki ograniczają do 1 roku)
+- Możliwość wykupienia certyfikatów Organizational Validation (OV) i Extended Validation (EV) poza standardowym DV (Domain Validation)
+- Wsparcie techniczne
+
+</div>
+
+</div>
+
+<br />
+
+<div style="display: flex; font-size: 30pt">
+
+<div> <!-- .element: class="fragment fade-in" data-fragment-index="3" -->
+
+## ZeroSSL
+
+- Zarówno darmowe, jak i płatne certyfikaty
+- Podobne do Let's Encrypt, ale z większymi możliwościami konfiguracji
+
+</div>
+
+<div> <!-- .element: class="fragment fade-in" data-fragment-index="4" -->
+
+## Cloudflare
+
+- Zarówno darmowe, jak i płatne certyfikaty (większe możliwości konfiguracji szyfrowania oraz wielopoziomowe domeny)
+- Zintegrowane z usługami Cloudflare (popularny CDN, firewall i inne usługi)
+- Łatwa i natychmiastowa konfiguracja dla użytkowników Cloudflare'a
+
+</div>
+</div>
+note: Stachu
+|||
+
+<img class="r-stretch" src="./imgs/Meme3.jpg" alt="meme 3" />
+
+# Skupmy się na Let's Encrypt
+note: Stachu
+---
+
+## Wspierane sposoby instalacji certyfikatu Let's Encrypt
+
+<img class="r-stretch" src="./imgs/8q1p9z.gif" alt="monkey hammer gif" />
+note: Stachu
+|||
+
+## Manualna
+
+- **Manualna instalacja** certyfikatu polega na ręcznym wygenerowaniu certyfikatu Let's Encrypt, a następnie skonfigurowaniu serwera WWW, aby używał tego certyfikatu.
+
+- Do generowania certyfikatów można użyć narzędzi takich jak **Certbot** lub **ZeroSSL bot**. Następnie należy skonfigurować serwer WWW, aby używał wygenerowanego certyfikatu oraz pamiętać o regularnym odnawianiu certyfikatów.
+
+- Metoda ta jest **niewygodna** i **czasochłonna**, dlatego zaleca się automatyzację procesu generowania certyfikatów (ACME) ale ma swoje zastosowanie w przypadku systemów, które nie są obsługiwane przez narzędzia automatyzujące.
+note: Nasus
+|||
+
+## Certbot
+
+- **Certbot** to prosty w użyciu program, który automatyzuje proces uzyskiwania certyfikatów Let's Encrypt. Automatycznie konfiguruje serwer WWW (np. apache, nginx), aby używał nowego certyfikatu, a także automatycznie odnawia certyfikaty, gdy zbliżają się do wygaśnięcia. Certbot wspiera autoryzację `http-01` oraz `dns-01`.
+
+- Certbot jest dostępny na większość popularnych systemów operacyjnych, takich jak **Linux**, **Windows** oraz **macOS**. Dostępne są również wtyczki do popularnych serwerów WWW, takich jak **Apache** i **Nginx**, umożliwiające automatyczne przystosowanie konfiguracji używanego serwera WWW.
+note: Filip
+|||
+
+## Caddy
+
+- **Caddy** to serwer WWW, który automatycznie obsługuje certyfikaty Let's Encrypt. Wystarczy dodać konfigurację serwera WWW do pliku `Caddyfile`, a Caddy automatycznie wygeneruje certyfikat Let's Encrypt i skonfiguruje serwer WWW, aby używał tego certyfikatu.
+
+- Caddy obsługuje autoryzację `http-01` oraz `tls-alpn-01`. W przypadku autoryzacji `http-01`, Caddy automatycznie dodaje odpowiednią konfigurację do pliku `Caddyfile`, aby umożliwić Let's Encrypt weryfikację domeny.
+
+- Caddy jest dostępny na systemy operacyjne **Linux**, **Windows** oraz **macOS**. Oprócz obsługi certyfikatów Let's Encrypt, Caddy oferuje wiele innych funkcji, takich jak load balancing, obsługa protokołu HTTP/2, eksperymentalna obsługa protokołu QUIC czy możliwość konfiguracji poprzez API, dzięki czemu jest to ciekawa alternatywa dla bardziej popularnych serwerów WWW, takich jak **Apache** czy **Nginx**.
+note: Bartek
+|||
+
+## cert-manager
+
+- **cert-manager** to narzędzie do zarządzania certyfikatami w środowiskach opartych na **Kubernetes**. Automatycznie generuje certyfikaty Let's Encrypt dla aplikacji działających w klastrze Kubernetes, a także automatycznie odnawia certyfikaty, gdy zbliżają się do wygaśnięcia.
+
+- cert-manager obsługuje autoryzację `http-01` oraz `dns-01`. W przypadku obu metod, cert-manager automatycznie dodaje odpowiednie zasoby do klastra Kubernetes, aby umożliwić Let's Encrypt weryfikację domeny.
+note: Stachu
+|||
+
+## Dostawcy Hostingu
+
+- Wiele firm hostingowych oferuje integrację z Let's Encrypt. W takim przypadku proces generowania certyfikatu jest zautomatyzowany, a użytkownik nie musi się martwić o konfigurację serwera WWW. Jedną z wad takiego rozwiązania jest ograniczona kontrola nad konfiguracją oraz limit na ilość certyfikatów, które można wygenerować.
+note: Nasus
+---
+
 
 ## Czas na praktykę!
 
 <img class="r-stretch" src="./imgs/8q1qtu.gif" alt="meme gif" />
-
+note: Stachu
 |||
 
 ## Instalacja na serwerze NGINX (Linux) z certbot'em
@@ -266,7 +268,7 @@ systemctl enable nginx
 apt-get install -y certbot python3-certbot-nginx
 certbot --nginx --agree-tos # --register-unsafely-without-email --staging
 ```
-
+note: Filip
 |||
 
 ## Instalacja na serwerze Caddy (Linux)
@@ -286,7 +288,7 @@ example.com {
 ```bash
 $ caddy run
 ```
-
+note: Bartek
 |||
 
 ## Instalacja w firmie hostingowej
@@ -314,7 +316,7 @@ Poniżej przedstawiamy przykładową konfigurację certyfikatu Let's Encrypt u j
 <img class="current-visible r-stretch" src="./imgs/hosting2.png" alt="hosting 2" /> <!-- .element: class="fragment fade-in" data-fragment-index="2" -->
 
 </div>
-
+note: Nasus
 ---
 
 ## Dziękujemy za uwagę!
